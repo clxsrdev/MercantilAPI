@@ -8,6 +8,7 @@ import com.clxsrdev.mercantilAPI.service.FacturaService;
 import com.clxsrdev.mercantilAPI.service.MontacargasService;
 import com.clxsrdev.mercantilAPI.service.VehiculosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,6 +71,16 @@ public class FacturaMontaController {
         facturaMontaService.delete(id);
     }
 
-
+    @DeleteMapping("/id/{idFactura}")
+    public ResponseEntity<?> deleteFacturaMonta(@PathVariable Long idFactura) {
+        try {
+            facturaMontaService.deleteFacturaMontaByFacturaId(idFactura);
+            return ResponseEntity.ok("Factura Monta eliminada exitosamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al intentar eliminar la Factura Monta.");
+        }
+    }
 
 }

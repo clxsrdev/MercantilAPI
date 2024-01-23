@@ -26,8 +26,12 @@ public class GasolinaV {
     private Double ltsGas;
 
     @Column(name = "fecha_carga")
+    @Temporal(TemporalType.DATE)
     private Date fechaCarga;
 
     @Column(name = "kilometraje")
     private Integer kilometraje;
+
+    @Column(name = "monto")
+    private Integer monto;
 }

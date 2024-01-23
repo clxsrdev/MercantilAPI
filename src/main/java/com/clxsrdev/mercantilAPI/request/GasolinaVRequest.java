@@ -52,4 +52,13 @@ public class GasolinaVRequest {
     private Date fechaCarga;
     private Integer kilometraje;
 
+    public Integer getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Integer monto) {
+        this.monto = monto;
+    }
+
+    private Integer monto;
 }

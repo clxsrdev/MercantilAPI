@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,19 @@ public class GasolinaVController {
         return gasolinaVService.getById(id);
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public List<GasolinaV> getGasolinaVehiculoByNombre(@PathVariable String nombre) {
+        return gasolinaVService.getGasolinaVehiculoByNombre(nombre);
+    }
+
+    @GetMapping("/nombre/{nombre}/fecha-inicio/{fechaIni}/fecha-fin/{fechaFin}")
+    public List<GasolinaV> getGasolinaVehiculoByNombreYFecha(
+            @PathVariable String nombre,
+            @PathVariable("fechaIni") LocalDate fechaInicio,
+            @PathVariable("fechaFin") LocalDate fechaFin) {
+        return gasolinaVService.getGasolinaVehiculoByNombreYFecha(nombre, fechaInicio, fechaFin);
+    }
+
     @PostMapping
     public GasolinaV saveUpdate(@RequestBody GasolinaVRequest gasolinaVRequest) {
         GasolinaV gasolinaV = new GasolinaV();
@@ -45,6 +59,7 @@ public class GasolinaVController {
         gasolinaV.setLtsGas(gasolinaVRequest.getLtsGas());
         gasolinaV.setFechaCarga(gasolinaVRequest.getFechaCarga());
         gasolinaV.setKilometraje(gasolinaVRequest.getKilometraje());
+        gasolinaV.setMonto(gasolinaVRequest.getMonto());
 
         gasolinaVService.saveOrUpdate(gasolinaV);
 

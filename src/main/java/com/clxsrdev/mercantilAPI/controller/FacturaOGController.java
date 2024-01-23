@@ -6,9 +6,11 @@ import com.clxsrdev.mercantilAPI.entity.Sucursal;
 import com.clxsrdev.mercantilAPI.service.FacturaOGService;
 import com.clxsrdev.mercantilAPI.service.FacturaService;
 import com.clxsrdev.mercantilAPI.service.SucursalService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,8 +65,28 @@ public class FacturaOGController {
         }
     }
 
+    @GetMapping("/fecha-inicio/{fechaIni}/fecha-fin/{fechaFin}")
+    public List<Object> getFacturasOGByFecha(
+            @PathVariable("fechaIni") LocalDate fechaInicio,
+            @PathVariable("fechaFin") LocalDate fechaFin) {
+        return facturaOGService.getFacturasOGByFecha(fechaInicio, fechaFin);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id")Long id) {
         facturaOGService.delete(id);
     }
+
+    @DeleteMapping("/id/{idFactura}")
+    public ResponseEntity<?> deleteFacturaOGByFacturaId(@PathVariable Long idFactura) {
+        try {
+            facturaOGService.deleteFacturaOGByFacturaId(idFactura);
+            return ResponseEntity.ok("FacturaOG eliminada exitosamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al intentar eliminar la FacturaOG.");
+        }
+    }
+
 }

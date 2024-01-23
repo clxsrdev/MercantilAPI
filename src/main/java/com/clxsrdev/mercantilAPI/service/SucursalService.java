@@ -1,10 +1,13 @@
 package com.clxsrdev.mercantilAPI.service;
 
+import com.clxsrdev.mercantilAPI.entity.FacturaVehiculo;
 import com.clxsrdev.mercantilAPI.entity.Sucursal;
+import com.clxsrdev.mercantilAPI.repository.FacturaVehiRepository;
 import com.clxsrdev.mercantilAPI.repository.SucursalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,13 @@ public class SucursalService {
 
     @Autowired
     SucursalRepository sucursalRepository;
+
+    @Autowired
+    private FacturaVehiRepository facturaVehiculoRepository;
+
+    public List<FacturaVehiculo> getFacturasVehiculoBySucursalAndFecha(String nombreSucursal, LocalDate fechaInicio, LocalDate fechaFin) {
+        return facturaVehiculoRepository.getFacturasVehiculoBySucursalAndFecha(nombreSucursal, fechaInicio, fechaFin);
+    }
 
     public List<Sucursal> getSucursales(){
         return sucursalRepository.findAll();

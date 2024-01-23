@@ -1,6 +1,7 @@
 package com.clxsrdev.mercantilAPI.service;
 
 import com.clxsrdev.mercantilAPI.entity.FacturaMonta;
+import com.clxsrdev.mercantilAPI.entity.FacturaOG;
 import com.clxsrdev.mercantilAPI.repository.FacturaMontaRepository;
 import com.clxsrdev.mercantilAPI.repository.FacturaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,11 @@ public class FacturaMontaService {
 
     public void delete(Long id) {
         facturaMontaRepository.deleteById(id);
+    }
+
+    public void deleteFacturaMontaByFacturaId(Long idFactura) {
+        FacturaMonta facturaMonta = facturaMontaRepository.findByFacturaIdFactura(idFactura)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontro FacturaMonta con el ID de factura: " + idFactura));
+        facturaMontaRepository.delete(facturaMonta);
     }
 }
