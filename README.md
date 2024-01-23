@@ -1,4 +1,4 @@
-# Mercantil App - Documentación
+# Mercantil API - Documentación
 
 ## Descripción
 
